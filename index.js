@@ -42,12 +42,12 @@ app.get('/register', (req, res) => {
 
   app.post("/register", async (req,res) =>{
     console.log(req.body)
-    const {email ,password} = req.body
+    const {Email ,password} = req.body
     // res.send(`Username: ${username} Password: ${password}`); 
-
+const email = Email
     const userpassword = await bcrypt.hash(password,10);
     console.log(userpassword);
-    
+    const nuser = true
     if(email){
       const payload = {
         user: {
@@ -85,6 +85,7 @@ app.get('/register', (req, res) => {
              password: userpassword,
              token: config.SECRET_KEY
            }) 
+           console.log(user)
         }
    
       )
@@ -109,8 +110,14 @@ app.get('/register', (req, res) => {
 //     res.send(false)
 //   }
 // })
-app.post('/login',(res,req) =>{
-  const {email,password} = req.body;
+
+
+
+app.post("/login", async (req,res) =>{
+  console.log(req.body)
+  const {Email ,password} = req.body
+  // res.send(`Username: ${username} Password: ${password}`); 
+const email = Email
   console.log(email)
 
 })
