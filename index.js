@@ -114,12 +114,34 @@ const email = Email
 
 
 app.post("/login", async (req,res) =>{
-  console.log(req.body)
+ 
   const {Email ,password} = req.body
   // res.send(`Username: ${username} Password: ${password}`); 
 const email = Email
   console.log(email)
-
+  let user = await User.findOne({
+    email: email
+  })
+console.log(user)
+if(user){
+  console.log("User Existed")
+  const isMatch = await bcrypt.compare(password, user.password);
+  console.log(isMatch)
+  if(isMatch){
+    console.log("Password is correct")
+  const payload = {
+    user:{
+      user: user.id
+    }
+  }
+  jwt.sign(payload,config.SECRET_KEY,(err,token) =>{
+    if(err) throw err
+    else{
+      console.log(token)
+    }
+  })
+  }
+}
 })
 
 
